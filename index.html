@@ -3,103 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Unified Feed — Microsoft Outlook</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
+<title>Unified Feed</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0f0f11;
-    --bg2: #17171a;
-    --bg3: #1e1e22;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --text: #f0f0f2;
-    --text2: #9898a6;
-    --text3: #5a5a6a;
-    --accent: #4f8ef7;
-    --accent-dim: rgba(79,142,247,0.15);
-    --green: #3ecf8e;
-    --green-dim: rgba(62,207,142,0.12);
-    --radius: 10px;
-    --radius-sm: 6px;
+    --bg:#0f0f11; --bg2:#17171a; --bg3:#1e1e22;
+    --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+    --text:#f0f0f2; --text2:#9898a6; --text3:#5a5a6a;
+    --accent:#4f8ef7; --accent-dim:rgba(79,142,247,0.15);
+    --green:#3ecf8e; --green-dim:rgba(62,207,142,0.12);
+    --amber:#f5a623; --amber-dim:rgba(245,166,35,0.12);
+    --radius:10px; --radius-sm:6px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; overflow:hidden; }
 
-  header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .logo-mark { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 20px; height: 20px; }
-  .logo-mark span { border-radius: 2px; }
-  .logo-title { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; }
-  .header-spacer { flex: 1; }
-  .header-tabs { display: flex; gap: 2px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px; }
-  .htab { font-size: 12px; padding: 4px 12px; border-radius: 4px; cursor: pointer; color: var(--text2); border: none; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
-  .htab.on { background: var(--bg3); color: var(--text); }
-  .htab:hover:not(.on) { color: var(--text); }
+  header { display:flex; align-items:center; gap:12px; padding:13px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .logo-mark { display:grid; grid-template-columns:1fr 1fr; gap:2px; width:18px; height:18px; }
+  .logo-mark span { border-radius:2px; }
+  .logo-title { font-size:14px; font-weight:500; letter-spacing:-0.01em; }
+  .header-spacer { flex:1; }
+  .last-sync { font-size:11px; color:var(--text3); font-family:'DM Mono',monospace; }
+  .refresh-btn { font-size:11px; padding:4px 10px; border:1px solid var(--border2); border-radius:var(--radius-sm); background:transparent; color:var(--text2); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.12s; }
+  .refresh-btn:hover { background:var(--bg2); color:var(--text); }
+  .header-tabs { display:flex; gap:2px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:3px; margin-left:8px; }
+  .htab { font-size:12px; padding:4px 12px; border-radius:4px; cursor:pointer; color:var(--text2); border:none; background:none; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .htab.on { background:var(--bg3); color:var(--text); }
+  .htab:hover:not(.on) { color:var(--text); }
 
-  .layout { display: grid; grid-template-columns: 220px 1fr; flex: 1; overflow: hidden; }
+  .layout { display:grid; grid-template-columns:220px 1fr; flex:1; overflow:hidden; }
 
-  .sidebar { border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
-  .sidebar-section { padding: 16px 14px 8px; }
-  .sidebar-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0 6px; margin-bottom: 6px; }
-  .acct-list { flex: 1; overflow-y: auto; padding: 0 14px 10px; }
-  .acct-row { display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.12s; border: 1px solid transparent; }
-  .acct-row:hover { background: var(--bg2); }
-  .acct-row.active { background: var(--bg3); border-color: var(--border2); }
-  .avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; font-family: 'DM Mono', monospace; }
-  .acct-meta { flex: 1; min-width: 0; }
-  .acct-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .acct-email { font-size: 10px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'DM Mono', monospace; }
-  .acct-count { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text3); background: var(--bg3); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; min-width: 18px; text-align: center; }
-  .acct-count.has-unread { background: var(--accent-dim); color: var(--accent); border-color: rgba(79,142,247,0.25); }
-  .sidebar-footer { padding: 10px 14px 14px; border-top: 1px solid var(--border); }
-  .add-btn { width: 100%; padding: 7px; font-size: 12px; background: transparent; border: 1px solid var(--border2); border-radius: var(--radius-sm); cursor: pointer; color: var(--text2); font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
-  .add-btn:hover { background: var(--bg2); color: var(--text); }
-  .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .sidebar { border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
+  .sidebar-section { padding:16px 14px 8px; }
+  .sidebar-label { font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text3); padding:0 6px; margin-bottom:6px; }
+  .acct-list { flex:1; overflow-y:auto; padding:0 14px 10px; display:flex; flex-direction:column; gap:4px; }
+  .acct-row { display:flex; align-items:center; gap:9px; padding:7px 8px; border-radius:var(--radius-sm); cursor:pointer; transition:background 0.12s; border:1px solid transparent; }
+  .acct-row:hover { background:var(--bg2); }
+  .acct-row.active { background:var(--bg3); border-color:var(--border2); }
+  .avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; flex-shrink:0; font-family:'DM Mono',monospace; }
+  .acct-meta { flex:1; min-width:0; }
+  .acct-name { font-size:12px; font-weight:500; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .acct-email { font-size:10px; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:'DM Mono',monospace; }
+  .acct-count { font-size:10px; font-family:'DM Mono',monospace; color:var(--text3); background:var(--bg3); border:1px solid var(--border); padding:1px 5px; border-radius:4px; min-width:18px; text-align:center; flex-shrink:0; }
+  .acct-count.has-unread { background:var(--accent-dim); color:var(--accent); border-color:rgba(79,142,247,0.25); }
+  .sidebar-footer { padding:10px 14px 14px; border-top:1px solid var(--border); }
 
-  .main { display: flex; flex-direction: column; overflow: hidden; }
-  .center-panel { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 30px; }
-  .setup-card { width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 20px; text-align: center; align-items: center; }
-  .ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; width: 36px; height: 36px; }
-  .ms-grid span { border-radius: 2px; }
-  .setup-title { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; }
-  .setup-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
-  .field-group { width: 100%; display: flex; flex-direction: column; gap: 6px; text-align: left; }
-  .field-label { font-size: 11px; font-weight: 500; color: var(--text2); letter-spacing: 0.03em; }
-  .field-input { font-size: 12px; padding: 9px 11px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--bg2); color: var(--text); width: 100%; font-family: 'DM Mono', monospace; transition: border-color 0.15s; }
-  .field-input:focus { outline: none; border-color: var(--accent); }
-  .field-input::placeholder { color: var(--text3); }
-  .ms-btn { width: 100%; padding: 10px; font-size: 13px; font-weight: 500; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.15s; letter-spacing: -0.01em; }
-  .ms-btn:hover { opacity: 0.88; }
-  .ms-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .helper-link { font-size: 11px; color: var(--accent); text-decoration: none; opacity: 0.8; }
-  .helper-link:hover { opacity: 1; }
-  .notice { font-size: 11px; color: var(--text3); line-height: 1.6; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; text-align: left; width: 100%; }
-  .notice strong { color: var(--text2); font-weight: 500; }
+  .main { display:flex; flex-direction:column; overflow:hidden; }
 
-  .feed-area { flex: 1; overflow-y: auto; }
-  .day-group-label { font-size: 10px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); padding: 10px 18px 6px; background: var(--bg); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1; }
-  .feed-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; position: relative; }
-  .feed-item:hover { background: var(--bg2); }
-  .unread-dot { position: absolute; left: 7px; top: 50%; transform: translateY(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
-  .item-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-  .icon-email { background: var(--accent-dim); }
-  .icon-cal { background: var(--green-dim); }
-  .item-body { flex: 1; min-width: 0; }
-  .item-row1 { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
-  .item-from { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-  .item-time { font-size: 11px; color: var(--text3); margin-left: auto; white-space: nowrap; flex-shrink: 0; font-family: 'DM Mono', monospace; }
-  .item-subject { font-size: 12px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
-  .item-preview { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .item-tags { display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
-  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; }
-  .empty-state { padding: 60px 20px; text-align: center; font-size: 13px; color: var(--text3); }
+  /* Setup panel */
+  .setup-outer { flex:1; overflow-y:auto; padding:30px 20px; display:flex; flex-direction:column; gap:24px; }
+  .setup-card { background:var(--bg2); border:1px solid var(--border2); border-radius:var(--radius); padding:20px 24px; display:flex; flex-direction:column; gap:12px; }
+  .setup-card-title { font-size:13px; font-weight:500; color:var(--text); display:flex; align-items:center; gap:8px; }
+  .step-badge { width:20px; height:20px; border-radius:50%; background:var(--accent-dim); color:var(--accent); font-size:10px; font-weight:500; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Mono',monospace; }
+  .setup-card-body { font-size:12px; color:var(--text2); line-height:1.7; }
+  .setup-card-body a { color:var(--accent); text-decoration:none; }
+  .setup-card-body a:hover { text-decoration:underline; }
+  .code-block { background:var(--bg); border:1px solid var(--border2); border-radius:var(--radius-sm); padding:12px 14px; font-family:'DM Mono',monospace; font-size:11px; color:var(--text); white-space:pre-wrap; word-break:break-all; line-height:1.6; position:relative; }
+  .copy-btn { position:absolute; top:8px; right:8px; font-size:10px; padding:3px 8px; background:var(--bg2); border:1px solid var(--border2); border-radius:4px; color:var(--text2); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.1s; }
+  .copy-btn:hover { color:var(--text); }
+  .field-group { display:flex; flex-direction:column; gap:6px; }
+  .field-label { font-size:11px; font-weight:500; color:var(--text2); letter-spacing:0.03em; }
+  .field-input { font-size:12px; padding:8px 10px; border:1px solid var(--border2); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); width:100%; font-family:'DM Mono',monospace; transition:border-color 0.15s; }
+  .field-input:focus { outline:none; border-color:var(--accent); }
+  .field-input::placeholder { color:var(--text3); }
+  .primary-btn { padding:9px 16px; font-size:13px; font-weight:500; background:var(--accent); color:#fff; border:none; border-radius:var(--radius-sm); cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.15s; }
+  .primary-btn:hover { opacity:0.88; }
+  .inline-row { display:flex; gap:8px; align-items:flex-end; }
+  .inline-row .field-group { flex:1; }
+  .hint { font-size:11px; color:var(--text3); line-height:1.6; }
+  .hint strong { color:var(--text2); font-weight:500; }
 
-  .statusbar { padding: 6px 18px; font-size: 11px; color: var(--text3); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 7px; min-height: 28px; font-family: 'DM Mono', monospace; flex-shrink: 0; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner { width: 10px; height: 10px; border: 1.5px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+  /* Feed */
+  .feed-area { flex:1; overflow-y:auto; }
+  .day-group-label { font-size:10px; font-weight:500; letter-spacing:0.07em; text-transform:uppercase; color:var(--text3); padding:10px 18px 6px; background:var(--bg); position:sticky; top:0; border-bottom:1px solid var(--border); z-index:1; }
+  .feed-item { display:flex; align-items:flex-start; gap:12px; padding:10px 18px; border-bottom:1px solid var(--border); transition:background 0.1s; position:relative; }
+  .feed-item:hover { background:var(--bg2); }
+  .unread-dot { position:absolute; left:7px; top:50%; transform:translateY(-50%); width:4px; height:4px; border-radius:50%; background:var(--accent); }
+  .item-icon { width:32px; height:32px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; margin-top:1px; }
+  .icon-email { background:var(--accent-dim); }
+  .icon-cal { background:var(--green-dim); }
+  .item-body { flex:1; min-width:0; }
+  .item-row1 { display:flex; align-items:baseline; gap:8px; margin-bottom:2px; }
+  .item-from { font-size:13px; font-weight:500; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px; }
+  .item-time { font-size:11px; color:var(--text3); margin-left:auto; white-space:nowrap; flex-shrink:0; font-family:'DM Mono',monospace; }
+  .item-subject { font-size:12px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:3px; }
+  .item-preview { font-size:11px; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .item-tags { display:flex; gap:4px; margin-top:5px; flex-wrap:wrap; }
+  .tag { font-size:10px; padding:2px 6px; border-radius:4px; font-family:'DM Mono',monospace; }
+  .empty-state { padding:60px 20px; text-align:center; font-size:13px; color:var(--text3); line-height:1.7; }
+
+  .statusbar { padding:6px 18px; font-size:11px; color:var(--text3); border-top:1px solid var(--border); display:flex; align-items:center; gap:7px; min-height:28px; font-family:'DM Mono',monospace; flex-shrink:0; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .spinner { width:10px; height:10px; border:1.5px solid var(--border2); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; flex-shrink:0; }
+  ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
 </style>
 </head>
 <body>
@@ -111,6 +107,8 @@
   </div>
   <span class="logo-title">Unified Feed</span>
   <div class="header-spacer"></div>
+  <span class="last-sync" id="last-sync"></span>
+  <button class="refresh-btn" onclick="loadFeed()">↻ Refresh</button>
   <div class="header-tabs">
     <button class="htab on" id="tab-all" onclick="setTab('all')">All</button>
     <button class="htab" id="tab-email" onclick="setTab('email')">Email</button>
@@ -124,197 +122,226 @@
       <div class="sidebar-label">Accounts</div>
     </div>
     <div class="acct-list" id="acct-list">
-      <div style="font-size:12px;color:var(--text3);padding:4px 8px;">No accounts yet</div>
+      <div style="font-size:12px;color:var(--text3);padding:4px 8px;">No data yet</div>
     </div>
     <div class="sidebar-footer">
-      <button class="add-btn" id="add-btn" onclick="signIn()">+ Add Microsoft account</button>
+      <div class="hint" style="font-size:10px;line-height:1.6;">Data synced via Power Automate. Add more accounts by creating additional flows.</div>
     </div>
   </aside>
 
   <main class="main">
-    <div id="setup-panel" class="center-panel">
-      <div class="setup-card">
-        <div class="ms-grid">
-          <span style="background:#F25022;"></span><span style="background:#7FBA00;"></span>
-          <span style="background:#00A4EF;"></span><span style="background:#FFB900;"></span>
+
+    <!-- Setup panel -->
+    <div class="setup-outer" id="setup-panel">
+
+      <div style="display:flex;align-items:center;gap:10px;padding:0 2px;">
+        <div class="logo-mark" style="width:24px;height:24px;">
+          <span style="background:#F25022;border-radius:3px;"></span><span style="background:#7FBA00;border-radius:3px;"></span>
+          <span style="background:#00A4EF;border-radius:3px;"></span><span style="background:#FFB900;border-radius:3px;"></span>
         </div>
-        <div class="setup-title">Connect your Outlook</div>
-        <div class="setup-desc">Sign in with Microsoft to load your email and calendar. You'll be redirected back here automatically after signing in.</div>
-        <div class="field-group">
-          <div class="field-label">AZURE APP CLIENT ID</div>
-          <input class="field-input" id="client-id-input" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
+        <div>
+          <div style="font-size:15px;font-weight:500;letter-spacing:-0.02em;">Connect via Power Automate</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:2px;">No IT approval needed · Works with all corporate accounts</div>
         </div>
-        <button class="ms-btn" onclick="signIn()">Sign in with Microsoft →</button>
-        <div class="notice">
-          <strong>Before signing in</strong> — make sure your Azure app registration has this redirect URI added under Authentication → Single-page application:<br><br>
-          <span id="redirect-uri-display" style="font-family:'DM Mono',monospace;color:var(--accent);font-size:11px;word-break:break-all;"></span>
-        </div>
-        <a class="helper-link" href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Azure App Registrations ↗</a>
       </div>
+
+      <!-- Step 1: JSONBin -->
+      <div class="setup-card">
+        <div class="setup-card-title">
+          <div class="step-badge">1</div>
+          Create a free JSONBin store
+        </div>
+        <div class="setup-card-body">
+          JSONBin gives you a free private URL to store your feed data. Power Automate will write to it; this app will read from it.
+          <br><br>
+          1. Go to <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> and create a free account<br>
+          2. Click <strong>New Bin</strong> and paste this as the starting content:
+        </div>
+        <div class="code-block" id="init-json">{ "items": [] }<button class="copy-btn" onclick="copyCode('init-json')">Copy</button></div>
+        <div class="setup-card-body">
+          3. Click <strong>Create Bin</strong><br>
+          4. Copy the <strong>Bin ID</strong> (looks like <code style="font-family:'DM Mono',monospace;color:var(--accent);">64abc123...</code>) and your <strong>API Key</strong> from the Access Keys section
+        </div>
+        <div class="field-group">
+          <div class="field-label">JSONBIN BIN ID</div>
+          <input class="field-input" id="bin-id" placeholder="64abc123def456..." />
+        </div>
+        <div class="field-group">
+          <div class="field-label">JSONBIN API KEY (X-MASTER-KEY)</div>
+          <input class="field-input" id="api-key" placeholder="$2b$10$..." type="password" />
+        </div>
+        <div>
+          <button class="primary-btn" onclick="saveConfig()">Save & test connection</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Power Automate -->
+      <div class="setup-card">
+        <div class="setup-card-title">
+          <div class="step-badge">2</div>
+          Create a Power Automate flow for each account
+        </div>
+        <div class="setup-card-body">
+          Repeat these steps for each Outlook account (dispatchbio, adagene, slambio, outlook.com). Power Automate already has permission to access all of them.
+          <br><br>
+          1. Go to <a href="https://make.powerautomate.com" target="_blank">make.powerautomate.com</a><br>
+          2. Click <strong>+ Create → Scheduled cloud flow</strong><br>
+          3. Set it to repeat every <strong>15 minutes</strong><br>
+          4. Add step: <strong>Office 365 Outlook → Get emails (V3)</strong><br>
+          &nbsp;&nbsp;&nbsp;• Sign in with that account<br>
+          &nbsp;&nbsp;&nbsp;• Folder: Inbox, Top: 20, Include Attachments: No<br>
+          5. Add step: <strong>Office 365 Outlook → Get calendar view of events (V3)</strong><br>
+          &nbsp;&nbsp;&nbsp;• Start: <code style="font-family:'DM Mono',monospace;color:var(--accent);">addDays(utcNow(), -7)</code><br>
+          &nbsp;&nbsp;&nbsp;• End: <code style="font-family:'DM Mono',monospace;color:var(--accent);">addDays(utcNow(), 14)</code><br>
+          6. Add step: <strong>HTTP</strong> (to write to JSONBin)<br>
+          &nbsp;&nbsp;&nbsp;• Method: <strong>PUT</strong><br>
+          &nbsp;&nbsp;&nbsp;• URI: (shown below after you save your Bin ID)<br>
+          &nbsp;&nbsp;&nbsp;• Headers and body: (shown below)
+        </div>
+
+        <div id="pa-instructions" style="display:none;flex-direction:column;gap:10px;">
+          <div class="field-label">HTTP ACTION — URI</div>
+          <div class="code-block" id="pa-uri"><button class="copy-btn" onclick="copyCode('pa-uri')">Copy</button></div>
+
+          <div class="field-label">HTTP ACTION — HEADERS</div>
+          <div class="code-block" id="pa-headers"><button class="copy-btn" onclick="copyCode('pa-headers')">Copy</button></div>
+
+          <div class="field-label">HTTP ACTION — BODY (paste into Expression editor)</div>
+          <div class="code-block" id="pa-body"><button class="copy-btn" onclick="copyCode('pa-body')">Copy</button></div>
+
+          <div class="hint">
+            <strong>Note:</strong> In the HTTP body, replace <code style="font-family:'DM Mono',monospace;color:var(--accent);">YOUR_ACCOUNT_EMAIL</code> with the actual email address for that flow's account. Create one flow per account.
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Done -->
+      <div class="setup-card">
+        <div class="setup-card-title">
+          <div class="step-badge">3</div>
+          Run your flows and refresh
+        </div>
+        <div class="setup-card-body">
+          Once your flows are created:<br><br>
+          1. Click <strong>Run</strong> on each flow to trigger it immediately<br>
+          2. Come back here and click <strong>↻ Refresh</strong> in the top bar<br>
+          3. Your emails and calendar events from all accounts will appear in the feed<br><br>
+          After the initial run, flows sync automatically every 15 minutes.
+        </div>
+      </div>
+
     </div>
+
+    <!-- Feed -->
     <div class="feed-area" id="feed-area" style="display:none;"></div>
+
     <div class="statusbar" id="statusbar"></div>
   </main>
 </div>
 
-<!-- MSAL from jsdelivr (on CSP allowlist) -->
-<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.27.0/lib/msal-browser.min.js"></script>
 <script>
-const GRAPH = 'https://graph.microsoft.com/v1.0';
-const SCOPES = ['User.Read', 'Mail.Read', 'Calendars.Read'];
-const REDIRECT_URI = window.location.origin + window.location.pathname.replace(/\/?$/, '/').replace(/\/\/$/, '/');
-const CLIENT_ID_KEY = 'uf_client_id';
-const ACCOUNTS_KEY = 'uf_accounts';
-
 const PALETTE = [
-  { bg:'rgba(79,142,247,0.15)', text:'#4f8ef7', tag:'rgba(79,142,247,0.12)', tagText:'#4f8ef7' },
-  { bg:'rgba(62,207,142,0.15)', text:'#3ecf8e', tag:'rgba(62,207,142,0.12)', tagText:'#3ecf8e' },
-  { bg:'rgba(232,121,249,0.15)', text:'#e879f9', tag:'rgba(232,121,249,0.12)', tagText:'#e879f9' },
-  { bg:'rgba(245,166,35,0.15)', text:'#f5a623', tag:'rgba(245,166,35,0.12)', tagText:'#f5a623' },
-  { bg:'rgba(240,82,82,0.15)', text:'#f05252', tag:'rgba(240,82,82,0.12)', tagText:'#f05252' },
+  {bg:'rgba(79,142,247,0.15)',text:'#4f8ef7',tag:'rgba(79,142,247,0.12)',tagText:'#4f8ef7'},
+  {bg:'rgba(62,207,142,0.15)',text:'#3ecf8e',tag:'rgba(62,207,142,0.12)',tagText:'#3ecf8e'},
+  {bg:'rgba(232,121,249,0.15)',text:'#e879f9',tag:'rgba(232,121,249,0.12)',tagText:'#e879f9'},
+  {bg:'rgba(245,166,35,0.15)',text:'#f5a623',tag:'rgba(245,166,35,0.12)',tagText:'#f5a623'},
+  {bg:'rgba(240,82,82,0.15)',text:'#f05252',tag:'rgba(240,82,82,0.12)',tagText:'#f05252'},
 ];
 
-let msalApp = null;
-let accounts = [];
 let allItems = [];
 let activeTab = 'all';
-let activeAcct = -1;
+let activeAcct = 'all';
+let accountColors = {};
+let colorIndex = 0;
 
-// Show the redirect URI so user can copy it into Azure
-document.getElementById('redirect-uri-display').textContent = REDIRECT_URI;
+const BIN_ID_KEY = 'uf_bin_id';
+const API_KEY_KEY = 'uf_api_key';
 
-// Restore saved client ID
-const savedClientId = localStorage.getItem(CLIENT_ID_KEY) || '';
-if (savedClientId) document.getElementById('client-id-input').value = savedClientId;
+// Restore saved config
+const savedBinId = localStorage.getItem(BIN_ID_KEY) || '';
+const savedApiKey = localStorage.getItem(API_KEY_KEY) || '';
+if (savedBinId) document.getElementById('bin-id').value = savedBinId;
+if (savedApiKey) document.getElementById('api-key').value = savedApiKey;
+if (savedBinId && savedApiKey) { updatePaInstructions(savedBinId, savedApiKey); loadFeed(); }
 
-function getClientId() {
-  const val = (document.getElementById('client-id-input').value || '').trim();
-  if (val) { localStorage.setItem(CLIENT_ID_KEY, val); return val; }
-  return localStorage.getItem(CLIENT_ID_KEY) || '';
+function saveConfig() {
+  const binId = document.getElementById('bin-id').value.trim();
+  const apiKey = document.getElementById('api-key').value.trim();
+  if (!binId || !apiKey) { setStatus('Please enter both Bin ID and API Key.', false); return; }
+  localStorage.setItem(BIN_ID_KEY, binId);
+  localStorage.setItem(API_KEY_KEY, apiKey);
+  updatePaInstructions(binId, apiKey);
+  loadFeed();
 }
 
-function initMsal(clientId) {
-  if (msalApp) return msalApp;
-  msalApp = new msal.PublicClientApplication({
-    auth: {
-      clientId,
-      authority: 'https://login.microsoftonline.com/common',
-      redirectUri: REDIRECT_URI,
-      navigateToLoginRequestUrl: true,
-    },
-    cache: { cacheLocation: 'localStorage', storeAuthStateInCookie: true },
-  });
-  return msalApp;
+function updatePaInstructions(binId, apiKey) {
+  const paDiv = document.getElementById('pa-instructions');
+  paDiv.style.display = 'flex';
+
+  document.getElementById('pa-uri').innerHTML =
+    `https://api.jsonbin.io/v3/b/${binId}<button class="copy-btn" onclick="copyCode('pa-uri')">Copy</button>`;
+
+  document.getElementById('pa-headers').innerHTML =
+    `Content-Type: application/json\nX-Master-Key: ${apiKey}<button class="copy-btn" onclick="copyCode('pa-headers')">Copy</button>`;
+
+  document.getElementById('pa-body').innerHTML =
+`{
+  "items": @{union(
+    if(empty(body('Get_items_from_bin')?['record']?['items']), createArray(),
+       body('Get_items_from_bin')?['record']?['items']),
+    union(
+      map(outputs('Get_emails_(V3)')?['body/value'], item => json(concat(
+        '{"type":"email","account":"YOUR_ACCOUNT_EMAIL",',
+        '"from":"', item()?['From'], '",',
+        '"subject":"', replace(item()?['Subject'], '"', '\\"'), '",',
+        '"preview":"', replace(first(skip(split(item()?['Body'], ' '), 0)), '"', '\\"'), '",',
+        '"time":"', item()?['DateTimeReceived'], '",',
+        '"unread":', if(item()?['IsRead'], 'false', 'true'), '}'))),
+      map(outputs('Get_calendar_view_of_events_(V3)')?['body/value'], item => json(concat(
+        '{"type":"cal","account":"YOUR_ACCOUNT_EMAIL",',
+        '"from":"', item()?['organizer/emailAddress/name'], '",',
+        '"subject":"', replace(item()?['subject'], '"', '\\"'), '",',
+        '"preview":"', replace(item()?['location/displayName'], '"', '\\"'), '",',
+        '"time":"', item()?['start/dateTime'], '",',
+        '"unread":false}')))
+    )
+  )}
+}<button class="copy-btn" onclick="copyCode('pa-body')">Copy</button>`;
 }
 
-async function signIn() {
-  const clientId = getClientId();
-  if (!clientId) { setStatus('Paste your Client ID first.', false); document.getElementById('client-id-input').focus(); return; }
-  setStatus('Redirecting to Microsoft sign-in…', true);
-  try {
-    const app = initMsal(clientId);
-    await app.initialize();
-    await app.loginRedirect({ scopes: SCOPES, prompt: 'select_account' });
-  } catch(e) {
-    setStatus('Error: ' + (e.message || e), false);
-  }
-}
+async function loadFeed() {
+  const binId = localStorage.getItem(BIN_ID_KEY);
+  const apiKey = localStorage.getItem(API_KEY_KEY);
+  if (!binId || !apiKey) return;
 
-async function handleRedirect() {
-  const clientId = getClientId();
-  if (!clientId) return;
-
-  let app;
+  setStatus('Fetching feed…', true);
   try {
-    app = initMsal(clientId);
-    await app.initialize();
-  } catch(e) { return; }
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': apiKey }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const items = (data.record?.items || []).map(it => ({ ...it, time: new Date(it.time) }));
+    allItems = items.sort((a, b) => b.time - a.time);
 
-  try {
-    const result = await app.handleRedirectPromise();
-    if (result && result.accessToken) {
-      setStatus('Signed in! Loading your data…', true);
-      await addAccountFromToken(result.accessToken, app);
+    // Assign colors per account
+    const accts = [...new Set(allItems.map(i => i.account))];
+    accts.forEach(a => { if (!accountColors[a]) { accountColors[a] = PALETTE[colorIndex++ % PALETTE.length]; } });
+
+    const syncTime = data.metadata?.createdAt ? new Date(data.metadata.createdAt) : null;
+    document.getElementById('last-sync').textContent = syncTime ? 'Last sync: ' + fmtTime(syncTime) : '';
+
+    if (allItems.length > 0) {
+      document.getElementById('setup-panel').style.display = 'none';
+      document.getElementById('feed-area').style.display = 'block';
     }
-  } catch(e) {
-    setStatus('Auth error: ' + (e.message || e), false);
-  }
 
-  // Load any already-cached MSAL accounts (silent token)
-  const msalAccounts = app.getAllAccounts();
-  for (const msalAcct of msalAccounts) {
-    if (accounts.find(a => a.email === msalAcct.username)) continue;
-    try {
-      const tokenResult = await app.acquireTokenSilent({ scopes: SCOPES, account: msalAcct });
-      await addAccountFromToken(tokenResult.accessToken, app);
-    } catch(_) {}
-  }
-
-  if (accounts.length > 0) {
-    showFeed();
-  }
-}
-
-async function addAccountFromToken(token, app) {
-  try {
-    const profile = await gget(token, '/me');
-    if (accounts.find(a => a.email === profile.userPrincipalName)) return;
-    const color = PALETTE[accounts.length % PALETTE.length];
-    const acct = { name: profile.displayName, email: profile.userPrincipalName, token, color, items: [], loading: true, error: null };
-    accounts.push(acct);
-    renderSidebar();
-    if (activeAcct === -1 && accounts.length === 1) activeAcct = 0;
-    showFeed();
-    setStatus('Loading emails and calendar for ' + acct.email + '…', true);
-    await fetchData(acct);
-    allItems = accounts.flatMap(a => a.items).sort((a, b) => b.time - a.time);
     renderSidebar();
     renderFeed();
-    setStatus(accounts.length + ' account' + (accounts.length > 1 ? 's' : '') + ' · ' + allItems.length + ' items loaded', false);
+    setStatus(allItems.length + ' items · ' + accts.length + ' account' + (accts.length !== 1 ? 's' : ''), false);
   } catch(e) {
-    setStatus('Error loading account: ' + (e.message || e), false);
+    setStatus('Error loading feed: ' + (e.message || e), false);
   }
-}
-
-async function fetchData(acct) {
-  try {
-    const now = new Date();
-    const past = new Date(now); past.setDate(past.getDate() - 7);
-    const future = new Date(now); future.setDate(future.getDate() + 14);
-    const [mail, cal] = await Promise.all([
-      gget(acct.token, '/me/mailFolders/inbox/messages?$top=50&$select=id,subject,from,receivedDateTime,isRead,bodyPreview&$orderby=receivedDateTime desc'),
-      gget(acct.token, '/me/calendarView?startDateTime=' + past.toISOString() + '&endDateTime=' + future.toISOString() + '&$top=30&$select=id,subject,start,end,location,organizer,isAllDay&$orderby=start/dateTime'),
-    ]);
-    (mail.value || []).forEach(m => acct.items.push({
-      type: 'email', account: acct,
-      from: m.from?.emailAddress?.name || m.from?.emailAddress?.address || 'Unknown',
-      subject: m.subject || '(no subject)',
-      preview: m.bodyPreview || '',
-      time: new Date(m.receivedDateTime),
-      unread: !m.isRead,
-    }));
-    (cal.value || []).forEach(e => acct.items.push({
-      type: 'cal', account: acct,
-      from: e.organizer?.emailAddress?.name || 'Event',
-      subject: e.subject || '(no title)',
-      preview: (e.location?.displayName ? e.location.displayName + ' · ' : '') + (e.isAllDay ? 'All day' : fmtTime(new Date(e.start.dateTime))),
-      time: new Date(e.start.dateTime),
-      unread: false,
-    }));
-  } catch(e) { acct.error = e.message || String(e); }
-  acct.loading = false;
-}
-
-async function gget(token, path) {
-  const r = await fetch(GRAPH + path, { headers: { Authorization: 'Bearer ' + token } });
-  if (!r.ok) throw new Error(await r.text());
-  return r.json();
-}
-
-function showFeed() {
-  document.getElementById('setup-panel').style.display = 'none';
-  document.getElementById('feed-area').style.display = 'block';
-  renderFeed();
 }
 
 function setTab(t) {
@@ -323,52 +350,59 @@ function setTab(t) {
   renderFeed();
 }
 
-function filterAcct(idx) {
-  activeAcct = idx;
+function filterAcct(a) {
+  activeAcct = a;
   renderSidebar();
   renderFeed();
 }
 
 function renderSidebar() {
   const el = document.getElementById('acct-list');
-  if (!accounts.length) { el.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:4px 8px;">No accounts yet</div>'; return; }
-  let html = accounts.map((a, i) => `
-    <div class="acct-row ${activeAcct===i?'active':''}" onclick="filterAcct(${i})">
-      <div class="avatar" style="background:${a.color.bg};color:${a.color.text};">${initials(a.name)}</div>
-      <div class="acct-meta">
-        <div class="acct-name">${esc(a.name)}</div>
-        <div class="acct-email">${esc(a.email)}</div>
-      </div>
-      <div class="acct-count ${a.items.filter(x=>x.unread).length?'has-unread':''}">${a.loading?'…':a.error?'!':(a.items.filter(x=>x.unread).length||'·')}</div>
-    </div>`).join('');
-  if (accounts.length > 1) {
-    const u = allItems.filter(x=>x.unread).length;
-    html = `<div class="acct-row ${activeAcct===-1?'active':''}" onclick="filterAcct(-1)" style="margin-bottom:6px;">
+  const accts = [...new Set(allItems.map(i => i.account))];
+  if (!accts.length) { el.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:4px 8px;">No data yet</div>'; return; }
+
+  const allUnread = allItems.filter(x => x.unread).length;
+  let html = '';
+
+  if (accts.length > 1) {
+    html += `<div class="acct-row ${activeAcct==='all'?'active':''}" onclick="filterAcct('all')">
       <div class="avatar" style="background:rgba(255,255,255,0.05);color:var(--text2);font-size:9px;">ALL</div>
-      <div class="acct-meta"><div class="acct-name">All accounts</div><div class="acct-email">${accounts.length} accounts</div></div>
-      <div class="acct-count ${u?'has-unread':''}">${u||'·'}</div>
-    </div>` + html;
+      <div class="acct-meta"><div class="acct-name">All accounts</div><div class="acct-email">${accts.length} accounts</div></div>
+      <div class="acct-count ${allUnread?'has-unread':''}">${allUnread||'·'}</div>
+    </div>`;
   }
+
+  accts.forEach(a => {
+    const c = accountColors[a] || PALETTE[0];
+    const unread = allItems.filter(i => i.account===a && i.unread).length;
+    const domain = a.split('@')[1] || a;
+    const label = initials(a.split('@')[0]);
+    html += `<div class="acct-row ${activeAcct===a?'active':''}" onclick="filterAcct('${esc(a)}')">
+      <div class="avatar" style="background:${c.bg};color:${c.text};">${label}</div>
+      <div class="acct-meta"><div class="acct-name">${esc(domain)}</div><div class="acct-email">${esc(a)}</div></div>
+      <div class="acct-count ${unread?'has-unread':''}">${unread||'·'}</div>
+    </div>`;
+  });
   el.innerHTML = html;
 }
 
 function renderFeed() {
   const el = document.getElementById('feed-area');
-  const src = activeAcct === -1 ? allItems : (accounts[activeAcct]?.items || []);
-  const items = src.filter(it => activeTab==='all' || it.type===activeTab).sort((a,b)=>b.time-a.time);
-  if (!items.length) { el.innerHTML = '<div class="empty-state">Nothing to show here.</div>'; return; }
+  let items = activeAcct==='all' ? allItems : allItems.filter(i=>i.account===activeAcct);
+  items = items.filter(it => activeTab==='all' || it.type===activeTab);
+  if (!items.length) { el.innerHTML = '<div class="empty-state">No items for this filter.<br><span style="font-size:11px;">Run your Power Automate flows and click Refresh.</span></div>'; return; }
   const groups = {};
   items.forEach(it => { const k=dayKey(it.time); if(!groups[k]) groups[k]=[]; groups[k].push(it); });
-  el.innerHTML = Object.entries(groups).map(([day, dayItems]) =>
+  el.innerHTML = Object.entries(groups).map(([day,dayItems]) =>
     `<div class="day-group-label">${day} · ${dayItems.length}</div>` + dayItems.map(itemHtml).join('')
   ).join('');
 }
 
 function itemHtml(it) {
-  const c = it.account.color;
+  const c = accountColors[it.account] || PALETTE[0];
   const icon = it.type==='email' ? '✉' : '📅';
   const iconClass = it.type==='email' ? 'icon-email' : 'icon-cal';
-  const domain = it.account.email.split('@')[1] || it.account.email;
+  const domain = (it.account||'').split('@')[1] || it.account;
   const unreadDot = it.unread ? '<div class="unread-dot"></div>' : '';
   const unreadTag = it.unread ? `<span class="tag" style="background:rgba(79,142,247,0.1);color:#4f8ef7;">unread</span>` : '';
   const calTag = it.type==='cal' ? `<span class="tag" style="background:rgba(62,207,142,0.1);color:#3ecf8e;">event</span>` : '';
@@ -376,9 +410,9 @@ function itemHtml(it) {
     ${unreadDot}
     <div class="item-icon ${iconClass}">${icon}</div>
     <div class="item-body">
-      <div class="item-row1"><span class="item-from">${esc(it.from)}</span><span class="item-time">${fmtTime(it.time)}</span></div>
-      <div class="item-subject">${esc(it.subject)}</div>
-      <div class="item-preview">${esc(it.preview)}</div>
+      <div class="item-row1"><span class="item-from">${esc(it.from||'')}</span><span class="item-time">${fmtTime(it.time)}</span></div>
+      <div class="item-subject">${esc(it.subject||'')}</div>
+      <div class="item-preview">${esc(it.preview||'')}</div>
       <div class="item-tags">
         <span class="tag" style="background:${c.tag};color:${c.tagText};">${esc(domain)}</span>
         ${calTag}${unreadTag}
@@ -388,34 +422,37 @@ function itemHtml(it) {
 }
 
 function fmtTime(d) {
-  if (!d || isNaN(d)) return '';
-  const now = new Date();
-  const yd = new Date(now); yd.setDate(yd.getDate()-1);
+  if (!d||isNaN(d)) return '';
+  const now=new Date(), yd=new Date(now); yd.setDate(yd.getDate()-1);
   if (d.toDateString()===now.toDateString()) return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
   if (d.toDateString()===yd.toDateString()) return 'Yesterday';
   return d.toLocaleDateString([],{month:'short',day:'numeric'});
 }
 
 function dayKey(d) {
-  const now = new Date();
-  const yd = new Date(now); yd.setDate(yd.getDate()-1);
-  const tm = new Date(now); tm.setDate(tm.getDate()+1);
+  const now=new Date(), yd=new Date(now); yd.setDate(yd.getDate()-1); const tm=new Date(now); tm.setDate(tm.getDate()+1);
   if (d.toDateString()===now.toDateString()) return 'Today';
   if (d.toDateString()===yd.toDateString()) return 'Yesterday';
   if (d.toDateString()===tm.toDateString()) return 'Tomorrow';
-  if (d > now) return d.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'}) + ' (upcoming)';
+  if (d>now) return d.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'})+' (upcoming)';
   return d.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'});
 }
 
-function initials(n) { return (n||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
-function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function setStatus(msg, spin) {
-  const el = document.getElementById('statusbar');
-  el.innerHTML = msg ? ((spin?'<div class="spinner"></div>':'') + `<span>${esc(msg)}</span>`) : '';
+function copyCode(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText.replace(/^Copy$/m,'').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    if (btn) { btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',2000); }
+  });
 }
 
-// Boot — handle redirect on page load
-handleRedirect();
+function initials(n) { return (n||'?').split(/[._-]/).map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setStatus(msg,spin) {
+  const el=document.getElementById('statusbar');
+  el.innerHTML=msg?((spin?'<div class="spinner"></div>':'')+`<span>${esc(msg)}</span>`):'';
+}
 </script>
 </body>
 </html>
