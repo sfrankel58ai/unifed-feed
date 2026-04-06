@@ -20,530 +20,83 @@
     --accent-dim: rgba(79,142,247,0.15);
     --green: #3ecf8e;
     --green-dim: rgba(62,207,142,0.12);
-    --amber: #f5a623;
-    --amber-dim: rgba(245,166,35,0.12);
-    --red: #f05252;
-    --red-dim: rgba(240,82,82,0.12);
-    --pink: #e879f9;
-    --pink-dim: rgba(232,121,249,0.12);
     --radius: 10px;
     --radius-sm: 6px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* ── Header ── */
-  header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    flex-shrink: 0;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-mark {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    width: 20px;
-    height: 20px;
-  }
-  .logo-mark span {
-    border-radius: 2px;
-  }
-  .logo-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
+  header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .logo-mark { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 20px; height: 20px; }
+  .logo-mark span { border-radius: 2px; }
+  .logo-title { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; }
   .header-spacer { flex: 1; }
-  .header-tabs {
-    display: flex;
-    gap: 2px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-  }
-  .htab {
-    font-size: 12px;
-    font-weight: 400;
-    padding: 4px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: var(--text2);
-    border: none;
-    background: none;
-    transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .htab.on {
-    background: var(--bg3);
-    color: var(--text);
-  }
+  .header-tabs { display: flex; gap: 2px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px; }
+  .htab { font-size: 12px; padding: 4px 12px; border-radius: 4px; cursor: pointer; color: var(--text2); border: none; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .htab.on { background: var(--bg3); color: var(--text); }
   .htab:hover:not(.on) { color: var(--text); }
 
-  /* ── Layout ── */
-  .layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    flex: 1;
-    overflow: hidden;
-  }
+  .layout { display: grid; grid-template-columns: 220px 1fr; flex: 1; overflow: hidden; }
 
-  /* ── Sidebar ── */
-  .sidebar {
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--bg);
-  }
-  .sidebar-section {
-    padding: 16px 14px 8px;
-  }
-  .sidebar-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text3);
-    padding: 0 6px;
-    margin-bottom: 6px;
-  }
-  .acct-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 14px 10px;
-  }
-  .acct-row {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 7px 8px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.12s;
-    border: 1px solid transparent;
-  }
+  .sidebar { border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .sidebar-section { padding: 16px 14px 8px; }
+  .sidebar-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0 6px; margin-bottom: 6px; }
+  .acct-list { flex: 1; overflow-y: auto; padding: 0 14px 10px; }
+  .acct-row { display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.12s; border: 1px solid transparent; }
   .acct-row:hover { background: var(--bg2); }
-  .acct-row.active {
-    background: var(--bg3);
-    border-color: var(--border2);
-  }
-  .avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
-    flex-shrink: 0;
-    font-family: 'DM Mono', monospace;
-  }
+  .acct-row.active { background: var(--bg3); border-color: var(--border2); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; font-family: 'DM Mono', monospace; }
   .acct-meta { flex: 1; min-width: 0; }
-  .acct-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .acct-email {
-    font-size: 10px;
-    color: var(--text3);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: 'DM Mono', monospace;
-  }
-  .acct-count {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    color: var(--text3);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 1px 5px;
-    border-radius: 4px;
-    min-width: 18px;
-    text-align: center;
-  }
-  .acct-count.has-unread {
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-color: rgba(79,142,247,0.25);
-  }
-  .sidebar-footer {
-    padding: 10px 14px 14px;
-    border-top: 1px solid var(--border);
-  }
-  .add-btn {
-    width: 100%;
-    padding: 7px;
-    font-size: 12px;
-    background: transparent;
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.12s;
-  }
-  .add-btn:hover {
-    background: var(--bg2);
-    color: var(--text);
-  }
-  .add-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+  .acct-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .acct-email { font-size: 10px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'DM Mono', monospace; }
+  .acct-count { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text3); background: var(--bg3); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; min-width: 18px; text-align: center; }
+  .acct-count.has-unread { background: var(--accent-dim); color: var(--accent); border-color: rgba(79,142,247,0.25); }
+  .sidebar-footer { padding: 10px 14px 14px; border-top: 1px solid var(--border); }
+  .add-btn { width: 100%; padding: 7px; font-size: 12px; background: transparent; border: 1px solid var(--border2); border-radius: var(--radius-sm); cursor: pointer; color: var(--text2); font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+  .add-btn:hover { background: var(--bg2); color: var(--text); }
+  .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ── Main ── */
-  .main {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--bg);
-  }
-
-  /* ── Setup / Code Panel ── */
-  .center-panel {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 30px;
-  }
-  .setup-card {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-    align-items: center;
-  }
-  .ms-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-    width: 36px;
-    height: 36px;
-  }
+  .main { display: flex; flex-direction: column; overflow: hidden; }
+  .center-panel { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 30px; }
+  .setup-card { width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 20px; text-align: center; align-items: center; }
+  .ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; width: 36px; height: 36px; }
   .ms-grid span { border-radius: 2px; }
-  .setup-title {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-  .setup-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.65;
-  }
-  .field-group {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    text-align: left;
-  }
-  .field-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text2);
-    letter-spacing: 0.03em;
-  }
-  .field-input {
-    font-size: 12px;
-    padding: 9px 11px;
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-sm);
-    background: var(--bg2);
-    color: var(--text);
-    width: 100%;
-    font-family: 'DM Mono', monospace;
-    transition: border-color 0.15s;
-  }
-  .field-input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
+  .setup-title { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; }
+  .setup-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .field-group { width: 100%; display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .field-label { font-size: 11px; font-weight: 500; color: var(--text2); letter-spacing: 0.03em; }
+  .field-input { font-size: 12px; padding: 9px 11px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--bg2); color: var(--text); width: 100%; font-family: 'DM Mono', monospace; transition: border-color 0.15s; }
+  .field-input:focus { outline: none; border-color: var(--accent); }
   .field-input::placeholder { color: var(--text3); }
-  .ms-btn {
-    width: 100%;
-    padding: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: opacity 0.15s;
-    letter-spacing: -0.01em;
-  }
+  .ms-btn { width: 100%; padding: 10px; font-size: 13px; font-weight: 500; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.15s; letter-spacing: -0.01em; }
   .ms-btn:hover { opacity: 0.88; }
   .ms-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .helper-link {
-    font-size: 11px;
-    color: var(--accent);
-    text-decoration: none;
-    opacity: 0.8;
-  }
+  .helper-link { font-size: 11px; color: var(--accent); text-decoration: none; opacity: 0.8; }
   .helper-link:hover { opacity: 1; }
+  .notice { font-size: 11px; color: var(--text3); line-height: 1.6; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; text-align: left; width: 100%; }
+  .notice strong { color: var(--text2); font-weight: 500; }
 
-  /* Code panel */
-  .code-card {
-    width: 100%;
-    max-width: 400px;
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .code-card-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-  .code-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .code-step {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .step-num {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--bg3);
-    border: 1px solid var(--border2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text2);
-    flex-shrink: 0;
-    margin-top: 1px;
-    font-family: 'DM Mono', monospace;
-  }
-  .step-text {
-    font-size: 12px;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-  .step-url {
-    font-family: 'DM Mono', monospace;
-    color: var(--accent);
-    font-size: 12px;
-  }
-  .code-display {
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    text-align: center;
-  }
-  .code-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: 0.15em;
-  }
-  .code-timer {
-    font-size: 11px;
-    color: var(--text3);
-    margin-top: 6px;
-    font-family: 'DM Mono', monospace;
-  }
-  .waiting-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--text2);
-  }
-  .cancel-link {
-    font-size: 11px;
-    color: var(--text3);
-    cursor: pointer;
-    text-align: center;
-  }
-  .cancel-link:hover { color: var(--text2); }
-
-  /* ── Feed ── */
-  .feed-area {
-    flex: 1;
-    overflow-y: auto;
-  }
-  .day-group-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--text3);
-    padding: 10px 18px 6px;
-    background: var(--bg);
-    position: sticky;
-    top: 0;
-    border-bottom: 1px solid var(--border);
-    z-index: 1;
-  }
-  .feed-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 18px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.1s;
-    position: relative;
-  }
+  .feed-area { flex: 1; overflow-y: auto; }
+  .day-group-label { font-size: 10px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); padding: 10px 18px 6px; background: var(--bg); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1; }
+  .feed-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; position: relative; }
   .feed-item:hover { background: var(--bg2); }
-  .unread-dot {
-    position: absolute;
-    left: 7px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-  .item-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  .unread-dot { position: absolute; left: 7px; top: 50%; transform: translateY(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+  .item-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
   .icon-email { background: var(--accent-dim); }
   .icon-cal { background: var(--green-dim); }
   .item-body { flex: 1; min-width: 0; }
-  .item-row1 {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 2px;
-  }
-  .item-from {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 180px;
-  }
-  .item-time {
-    font-size: 11px;
-    color: var(--text3);
-    margin-left: auto;
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-family: 'DM Mono', monospace;
-  }
-  .item-subject {
-    font-size: 12px;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 3px;
-  }
-  .item-preview {
-    font-size: 11px;
-    color: var(--text3);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .item-tags {
-    display: flex;
-    gap: 4px;
-    margin-top: 5px;
-    flex-wrap: wrap;
-  }
-  .tag {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 400;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.02em;
-  }
-  .empty-state {
-    padding: 60px 20px;
-    text-align: center;
-    font-size: 13px;
-    color: var(--text3);
-  }
+  .item-row1 { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
+  .item-from { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+  .item-time { font-size: 11px; color: var(--text3); margin-left: auto; white-space: nowrap; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+  .item-subject { font-size: 12px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+  .item-preview { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item-tags { display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; }
+  .empty-state { padding: 60px 20px; text-align: center; font-size: 13px; color: var(--text3); }
 
-  /* ── Status bar ── */
-  .statusbar {
-    padding: 6px 18px;
-    font-size: 11px;
-    color: var(--text3);
-    border-top: 1px solid var(--border);
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    min-height: 28px;
-    font-family: 'DM Mono', monospace;
-    flex-shrink: 0;
-  }
-
-  /* ── Spinner ── */
+  .statusbar { padding: 6px 18px; font-size: 11px; color: var(--text3); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 7px; min-height: 28px; font-family: 'DM Mono', monospace; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner {
-    width: 10px;
-    height: 10px;
-    border: 1.5px solid var(--border2);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    flex-shrink: 0;
-  }
-
-  /* Scrollbar */
+  .spinner { width: 10px; height: 10px; border: 1.5px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
@@ -552,15 +105,11 @@
 <body>
 
 <header>
-  <div class="logo">
-    <div class="logo-mark">
-      <span style="background:#F25022;"></span>
-      <span style="background:#7FBA00;"></span>
-      <span style="background:#00A4EF;"></span>
-      <span style="background:#FFB900;"></span>
-    </div>
-    <span class="logo-title">Unified Feed</span>
+  <div class="logo-mark">
+    <span style="background:#F25022;"></span><span style="background:#7FBA00;"></span>
+    <span style="background:#00A4EF;"></span><span style="background:#FFB900;"></span>
   </div>
+  <span class="logo-title">Unified Feed</span>
   <div class="header-spacer"></div>
   <div class="header-tabs">
     <button class="htab on" id="tab-all" onclick="setTab('all')">All</button>
@@ -570,8 +119,6 @@
 </header>
 
 <div class="layout">
-
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Accounts</div>
@@ -580,229 +127,152 @@
       <div style="font-size:12px;color:var(--text3);padding:4px 8px;">No accounts yet</div>
     </div>
     <div class="sidebar-footer">
-      <button class="add-btn" id="add-btn" onclick="startFlow()">+ Add Microsoft account</button>
+      <button class="add-btn" id="add-btn" onclick="signIn()">+ Add Microsoft account</button>
     </div>
   </aside>
 
-  <!-- Main -->
   <main class="main">
-    <div id="main-content" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-
-      <!-- Setup panel -->
-      <div class="center-panel" id="setup-panel">
-        <div class="setup-card">
-          <div class="ms-grid">
-            <span style="background:#F25022;"></span>
-            <span style="background:#7FBA00;"></span>
-            <span style="background:#00A4EF;"></span>
-            <span style="background:#FFB900;"></span>
-          </div>
-          <div class="setup-title">Connect your Outlook</div>
-          <div class="setup-desc">Paste your Azure App Client ID below.<br>No popups — sign in from any browser on your machine.</div>
-          <div class="field-group">
-            <div class="field-label">AZURE APP CLIENT ID</div>
-            <input class="field-input" id="client-id-input" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
-          </div>
-          <button class="ms-btn" onclick="startFlow()">Get sign-in code →</button>
-          <a class="helper-link" href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Need a Client ID? Create a free app registration ↗</a>
+    <div id="setup-panel" class="center-panel">
+      <div class="setup-card">
+        <div class="ms-grid">
+          <span style="background:#F25022;"></span><span style="background:#7FBA00;"></span>
+          <span style="background:#00A4EF;"></span><span style="background:#FFB900;"></span>
         </div>
+        <div class="setup-title">Connect your Outlook</div>
+        <div class="setup-desc">Sign in with Microsoft to load your email and calendar. You'll be redirected back here automatically after signing in.</div>
+        <div class="field-group">
+          <div class="field-label">AZURE APP CLIENT ID</div>
+          <input class="field-input" id="client-id-input" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
+        </div>
+        <button class="ms-btn" onclick="signIn()">Sign in with Microsoft →</button>
+        <div class="notice">
+          <strong>Before signing in</strong> — make sure your Azure app registration has this redirect URI added under Authentication → Single-page application:<br><br>
+          <span id="redirect-uri-display" style="font-family:'DM Mono',monospace;color:var(--accent);font-size:11px;word-break:break-all;"></span>
+        </div>
+        <a class="helper-link" href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Azure App Registrations ↗</a>
       </div>
-
-      <!-- Feed area (hidden until signed in) -->
-      <div class="feed-area" id="feed-area" style="display:none;"></div>
-
     </div>
-
+    <div class="feed-area" id="feed-area" style="display:none;"></div>
     <div class="statusbar" id="statusbar"></div>
   </main>
-
 </div>
 
+<!-- MSAL from jsdelivr (on CSP allowlist) -->
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.27.0/lib/msal-browser.min.js"></script>
 <script>
 const GRAPH = 'https://graph.microsoft.com/v1.0';
-const TOKEN_URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
-const DEVICE_URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/devicecode';
-const SCOPES = 'User.Read Mail.Read Calendars.Read offline_access';
+const SCOPES = ['User.Read', 'Mail.Read', 'Calendars.Read'];
+const REDIRECT_URI = window.location.origin + window.location.pathname.replace(/\/?$/, '/').replace(/\/\/$/, '/');
+const CLIENT_ID_KEY = 'uf_client_id';
+const ACCOUNTS_KEY = 'uf_accounts';
 
 const PALETTE = [
-  { bg: 'rgba(79,142,247,0.15)', text: '#4f8ef7', tag: 'rgba(79,142,247,0.12)', tagText: '#4f8ef7' },
-  { bg: 'rgba(62,207,142,0.15)', text: '#3ecf8e', tag: 'rgba(62,207,142,0.12)', tagText: '#3ecf8e' },
-  { bg: 'rgba(232,121,249,0.15)', text: '#e879f9', tag: 'rgba(232,121,249,0.12)', tagText: '#e879f9' },
-  { bg: 'rgba(245,166,35,0.15)', text: '#f5a623', tag: 'rgba(245,166,35,0.12)', tagText: '#f5a623' },
-  { bg: 'rgba(240,82,82,0.15)', text: '#f05252', tag: 'rgba(240,82,82,0.12)', tagText: '#f05252' },
+  { bg:'rgba(79,142,247,0.15)', text:'#4f8ef7', tag:'rgba(79,142,247,0.12)', tagText:'#4f8ef7' },
+  { bg:'rgba(62,207,142,0.15)', text:'#3ecf8e', tag:'rgba(62,207,142,0.12)', tagText:'#3ecf8e' },
+  { bg:'rgba(232,121,249,0.15)', text:'#e879f9', tag:'rgba(232,121,249,0.12)', tagText:'#e879f9' },
+  { bg:'rgba(245,166,35,0.15)', text:'#f5a623', tag:'rgba(245,166,35,0.12)', tagText:'#f5a623' },
+  { bg:'rgba(240,82,82,0.15)', text:'#f05252', tag:'rgba(240,82,82,0.12)', tagText:'#f05252' },
 ];
 
-let clientId = localStorage.getItem('uf_client_id') || '';
+let msalApp = null;
 let accounts = [];
 let allItems = [];
 let activeTab = 'all';
 let activeAcct = -1;
-let pollTimer = null;
 
-// Restore client ID if saved
-if (clientId) {
-  const el = document.getElementById('client-id-input');
-  if (el) el.value = clientId;
+// Show the redirect URI so user can copy it into Azure
+document.getElementById('redirect-uri-display').textContent = REDIRECT_URI;
+
+// Restore saved client ID
+const savedClientId = localStorage.getItem(CLIENT_ID_KEY) || '';
+if (savedClientId) document.getElementById('client-id-input').value = savedClientId;
+
+function getClientId() {
+  const val = (document.getElementById('client-id-input').value || '').trim();
+  if (val) { localStorage.setItem(CLIENT_ID_KEY, val); return val; }
+  return localStorage.getItem(CLIENT_ID_KEY) || '';
 }
 
-function setStatus(msg, spin) {
-  const el = document.getElementById('statusbar');
-  el.innerHTML = msg ? ((spin ? '<div class="spinner"></div>' : '') + `<span>${esc(msg)}</span>`) : '';
+function initMsal(clientId) {
+  if (msalApp) return msalApp;
+  msalApp = new msal.PublicClientApplication({
+    auth: {
+      clientId,
+      authority: 'https://login.microsoftonline.com/common',
+      redirectUri: REDIRECT_URI,
+      navigateToLoginRequestUrl: true,
+    },
+    cache: { cacheLocation: 'localStorage', storeAuthStateInCookie: true },
+  });
+  return msalApp;
 }
 
-async function startFlow() {
-  const inputEl = document.getElementById('client-id-input');
-  const val = (inputEl ? inputEl.value.trim() : '') || clientId;
-  if (!val) { setStatus('Paste your Client ID first.', false); if (inputEl) inputEl.focus(); return; }
-  clientId = val;
-  localStorage.setItem('uf_client_id', clientId);
+async function signIn() {
+  const clientId = getClientId();
+  if (!clientId) { setStatus('Paste your Client ID first.', false); document.getElementById('client-id-input').focus(); return; }
+  setStatus('Redirecting to Microsoft sign-in…', true);
+  try {
+    const app = initMsal(clientId);
+    await app.initialize();
+    await app.loginRedirect({ scopes: SCOPES, prompt: 'select_account' });
+  } catch(e) {
+    setStatus('Error: ' + (e.message || e), false);
+  }
+}
 
-  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-  document.getElementById('add-btn').disabled = true;
-  setStatus('Requesting device code…', true);
+async function handleRedirect() {
+  const clientId = getClientId();
+  if (!clientId) return;
+
+  let app;
+  try {
+    app = initMsal(clientId);
+    await app.initialize();
+  } catch(e) { return; }
 
   try {
-    const body = new URLSearchParams({ client_id: clientId, scope: SCOPES });
-    const res = await fetch(DEVICE_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error_description || data.error);
-    showCodePanel(data);
-    pollForToken(data.device_code, data.interval || 5, data.expires_in || 900);
-  } catch (e) {
-    setStatus('Error: ' + (e.message || e), false);
-    document.getElementById('add-btn').disabled = false;
-  }
-}
-
-function showCodePanel(data) {
-  const cp = document.getElementById('setup-panel');
-  const fa = document.getElementById('feed-area');
-
-  // If already have accounts, show code panel over feed
-  if (accounts.length > 0) {
-    fa.style.display = 'none';
-  }
-  cp.style.display = 'flex';
-
-  let remaining = data.expires_in || 900;
-  cp.innerHTML = `
-    <div class="setup-card">
-      <div class="code-card">
-        <div class="code-card-title">Sign in with Microsoft</div>
-        <div class="code-steps">
-          <div class="code-step">
-            <div class="step-num">1</div>
-            <div class="step-text">Open any browser and go to:<br><span class="step-url">microsoft.com/devicelogin</span></div>
-          </div>
-          <div class="code-step">
-            <div class="step-num">2</div>
-            <div class="step-text">Enter this code when prompted:</div>
-          </div>
-        </div>
-        <div class="code-display">
-          <div class="code-value">${data.user_code}</div>
-          <div class="code-timer">Expires in <span id="countdown">${fmt(remaining)}</span></div>
-        </div>
-        <div class="waiting-row">
-          <div class="spinner"></div>
-          <span>Waiting for you to sign in…</span>
-        </div>
-      </div>
-      <div class="cancel-link" onclick="cancelFlow()">Cancel</div>
-    </div>`;
-
-  const tick = setInterval(() => {
-    remaining--;
-    const el = document.getElementById('countdown');
-    if (el) el.textContent = fmt(remaining);
-    if (remaining <= 0) clearInterval(tick);
-  }, 1000);
-
-  setStatus('Go to microsoft.com/devicelogin and enter the code above.', false);
-}
-
-function fmt(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
-
-function cancelFlow() {
-  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-  document.getElementById('add-btn').disabled = false;
-  setStatus('', false);
-  if (accounts.length > 0) {
-    document.getElementById('setup-panel').style.display = 'none';
-    document.getElementById('feed-area').style.display = 'block';
-  } else {
-    document.getElementById('setup-panel').innerHTML = setupHtml();
-  }
-}
-
-function setupHtml() {
-  return `<div class="setup-card">
-    <div class="ms-grid">
-      <span style="background:#F25022;"></span><span style="background:#7FBA00;"></span>
-      <span style="background:#00A4EF;"></span><span style="background:#FFB900;"></span>
-    </div>
-    <div class="setup-title">Connect your Outlook</div>
-    <div class="setup-desc">Paste your Azure App Client ID below.<br>No popups — sign in from any browser on your machine.</div>
-    <div class="field-group">
-      <div class="field-label">AZURE APP CLIENT ID</div>
-      <input class="field-input" id="client-id-input" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" spellcheck="false" value="${esc(clientId)}" />
-    </div>
-    <button class="ms-btn" onclick="startFlow()">Get sign-in code →</button>
-    <a class="helper-link" href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Need a Client ID? Create a free app registration ↗</a>
-  </div>`;
-}
-
-function pollForToken(deviceCode, interval, expiresIn) {
-  const start = Date.now();
-  pollTimer = setInterval(async () => {
-    if (Date.now() - start > expiresIn * 1000) {
-      clearInterval(pollTimer);
-      setStatus('Code expired. Please try again.', false);
-      cancelFlow();
-      return;
+    const result = await app.handleRedirectPromise();
+    if (result && result.accessToken) {
+      setStatus('Signed in! Loading your data…', true);
+      await addAccountFromToken(result.accessToken, app);
     }
+  } catch(e) {
+    setStatus('Auth error: ' + (e.message || e), false);
+  }
+
+  // Load any already-cached MSAL accounts (silent token)
+  const msalAccounts = app.getAllAccounts();
+  for (const msalAcct of msalAccounts) {
+    if (accounts.find(a => a.email === msalAcct.username)) continue;
     try {
-      const body = new URLSearchParams({ client_id: clientId, grant_type: 'urn:ietf:params:oauth:grant-type:device_code', device_code: deviceCode });
-      const res = await fetch(TOKEN_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-      const data = await res.json();
-      if (data.error === 'authorization_pending') return;
-      if (data.error === 'slow_down') { interval += 5; return; }
-      if (data.error) { clearInterval(pollTimer); setStatus('Error: ' + (data.error_description || data.error), false); cancelFlow(); return; }
-      clearInterval(pollTimer); pollTimer = null;
-      await onToken(data.access_token);
-    } catch (_) { /* keep polling on network glitch */ }
-  }, interval * 1000);
+      const tokenResult = await app.acquireTokenSilent({ scopes: SCOPES, account: msalAcct });
+      await addAccountFromToken(tokenResult.accessToken, app);
+    } catch(_) {}
+  }
+
+  if (accounts.length > 0) {
+    showFeed();
+  }
 }
 
-async function onToken(token) {
-  setStatus('Signed in! Loading profile…', true);
+async function addAccountFromToken(token, app) {
   try {
     const profile = await gget(token, '/me');
-    if (accounts.find(a => a.email === profile.userPrincipalName)) {
-      setStatus('Account already connected.', false);
-      cancelFlow(); return;
-    }
+    if (accounts.find(a => a.email === profile.userPrincipalName)) return;
     const color = PALETTE[accounts.length % PALETTE.length];
-    const acct = { id: profile.id, name: profile.displayName, email: profile.userPrincipalName, token, color, items: [], loading: true, error: null };
+    const acct = { name: profile.displayName, email: profile.userPrincipalName, token, color, items: [], loading: true, error: null };
     accounts.push(acct);
-
-    document.getElementById('setup-panel').style.display = 'none';
-    document.getElementById('feed-area').style.display = 'block';
-    document.getElementById('add-btn').disabled = false;
-
-    if (activeAcct === -1 && accounts.length === 1) activeAcct = 0;
     renderSidebar();
-    renderFeed();
+    if (activeAcct === -1 && accounts.length === 1) activeAcct = 0;
+    showFeed();
     setStatus('Loading emails and calendar for ' + acct.email + '…', true);
-
     await fetchData(acct);
     allItems = accounts.flatMap(a => a.items).sort((a, b) => b.time - a.time);
     renderSidebar();
     renderFeed();
-    setStatus(accounts.length + ' account' + (accounts.length > 1 ? 's' : '') + ' · ' + allItems.length + ' items', false);
-  } catch (e) {
-    setStatus('Error: ' + (e.message || e), false);
-    document.getElementById('add-btn').disabled = false;
+    setStatus(accounts.length + ' account' + (accounts.length > 1 ? 's' : '') + ' · ' + allItems.length + ' items loaded', false);
+  } catch(e) {
+    setStatus('Error loading account: ' + (e.message || e), false);
   }
 }
 
@@ -813,7 +283,7 @@ async function fetchData(acct) {
     const future = new Date(now); future.setDate(future.getDate() + 14);
     const [mail, cal] = await Promise.all([
       gget(acct.token, '/me/mailFolders/inbox/messages?$top=50&$select=id,subject,from,receivedDateTime,isRead,bodyPreview&$orderby=receivedDateTime desc'),
-      gget(acct.token, `/me/calendarView?startDateTime=${past.toISOString()}&endDateTime=${future.toISOString()}&$top=30&$select=id,subject,start,end,location,organizer,isAllDay&$orderby=start/dateTime`),
+      gget(acct.token, '/me/calendarView?startDateTime=' + past.toISOString() + '&endDateTime=' + future.toISOString() + '&$top=30&$select=id,subject,start,end,location,organizer,isAllDay&$orderby=start/dateTime'),
     ]);
     (mail.value || []).forEach(m => acct.items.push({
       type: 'email', account: acct,
@@ -831,7 +301,7 @@ async function fetchData(acct) {
       time: new Date(e.start.dateTime),
       unread: false,
     }));
-  } catch (e) { acct.error = e.message || String(e); }
+  } catch(e) { acct.error = e.message || String(e); }
   acct.loading = false;
 }
 
@@ -841,29 +311,15 @@ async function gget(token, path) {
   return r.json();
 }
 
-function fmtTime(d) {
-  if (!d || isNaN(d)) return '';
-  const now = new Date();
-  const yd = new Date(now); yd.setDate(yd.getDate() - 1);
-  if (d.toDateString() === now.toDateString()) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  if (d.toDateString() === yd.toDateString()) return 'Yesterday';
-  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
-}
-
-function dayKey(d) {
-  const now = new Date();
-  const yd = new Date(now); yd.setDate(yd.getDate() - 1);
-  const tm = new Date(now); tm.setDate(tm.getDate() + 1);
-  if (d.toDateString() === now.toDateString()) return 'Today';
-  if (d.toDateString() === yd.toDateString()) return 'Yesterday';
-  if (d.toDateString() === tm.toDateString()) return 'Tomorrow';
-  if (d > now) return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' }) + ' (upcoming)';
-  return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
+function showFeed() {
+  document.getElementById('setup-panel').style.display = 'none';
+  document.getElementById('feed-area').style.display = 'block';
+  renderFeed();
 }
 
 function setTab(t) {
   activeTab = t;
-  ['all', 'email', 'cal'].forEach(x => document.getElementById('tab-' + x).classList.toggle('on', x === t));
+  ['all','email','cal'].forEach(x => document.getElementById('tab-'+x).classList.toggle('on', x===t));
   renderFeed();
 }
 
@@ -876,26 +332,21 @@ function filterAcct(idx) {
 function renderSidebar() {
   const el = document.getElementById('acct-list');
   if (!accounts.length) { el.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:4px 8px;">No accounts yet</div>'; return; }
-
   let html = accounts.map((a, i) => `
-    <div class="acct-row ${activeAcct === i ? 'active' : ''}" onclick="filterAcct(${i})">
+    <div class="acct-row ${activeAcct===i?'active':''}" onclick="filterAcct(${i})">
       <div class="avatar" style="background:${a.color.bg};color:${a.color.text};">${initials(a.name)}</div>
       <div class="acct-meta">
         <div class="acct-name">${esc(a.name)}</div>
         <div class="acct-email">${esc(a.email)}</div>
       </div>
-      <div class="acct-count ${a.items.filter(x => x.unread).length ? 'has-unread' : ''}">${a.loading ? '…' : a.error ? '!' : (a.items.filter(x => x.unread).length || '·')}</div>
+      <div class="acct-count ${a.items.filter(x=>x.unread).length?'has-unread':''}">${a.loading?'…':a.error?'!':(a.items.filter(x=>x.unread).length||'·')}</div>
     </div>`).join('');
-
   if (accounts.length > 1) {
-    const totalUnread = allItems.filter(x => x.unread).length;
-    html = `<div class="acct-row ${activeAcct === -1 ? 'active' : ''}" onclick="filterAcct(-1)" style="margin-bottom:6px;">
-      <div class="avatar" style="background:rgba(255,255,255,0.05);color:var(--text2);font-size:9px;letter-spacing:0.03em;">ALL</div>
-      <div class="acct-meta">
-        <div class="acct-name">All accounts</div>
-        <div class="acct-email">${accounts.length} accounts connected</div>
-      </div>
-      <div class="acct-count ${totalUnread ? 'has-unread' : ''}">${totalUnread || '·'}</div>
+    const u = allItems.filter(x=>x.unread).length;
+    html = `<div class="acct-row ${activeAcct===-1?'active':''}" onclick="filterAcct(-1)" style="margin-bottom:6px;">
+      <div class="avatar" style="background:rgba(255,255,255,0.05);color:var(--text2);font-size:9px;">ALL</div>
+      <div class="acct-meta"><div class="acct-name">All accounts</div><div class="acct-email">${accounts.length} accounts</div></div>
+      <div class="acct-count ${u?'has-unread':''}">${u||'·'}</div>
     </div>` + html;
   }
   el.innerHTML = html;
@@ -904,38 +355,28 @@ function renderSidebar() {
 function renderFeed() {
   const el = document.getElementById('feed-area');
   const src = activeAcct === -1 ? allItems : (accounts[activeAcct]?.items || []);
-  const items = src.filter(it => activeTab === 'all' || it.type === activeTab).sort((a, b) => b.time - a.time);
-
-  // Update tab counts in header
-  document.querySelector('#tab-all').textContent = 'All' + (allItems.length ? ' ' + allItems.length : '');
-
+  const items = src.filter(it => activeTab==='all' || it.type===activeTab).sort((a,b)=>b.time-a.time);
   if (!items.length) { el.innerHTML = '<div class="empty-state">Nothing to show here.</div>'; return; }
-
   const groups = {};
-  items.forEach(it => { const k = dayKey(it.time); if (!groups[k]) groups[k] = []; groups[k].push(it); });
-
+  items.forEach(it => { const k=dayKey(it.time); if(!groups[k]) groups[k]=[]; groups[k].push(it); });
   el.innerHTML = Object.entries(groups).map(([day, dayItems]) =>
-    `<div class="day-group-label">${day} · ${dayItems.length} item${dayItems.length !== 1 ? 's' : ''}</div>` +
-    dayItems.map(itemHtml).join('')
+    `<div class="day-group-label">${day} · ${dayItems.length}</div>` + dayItems.map(itemHtml).join('')
   ).join('');
 }
 
 function itemHtml(it) {
   const c = it.account.color;
-  const icon = it.type === 'email' ? '✉' : '📅';
-  const iconClass = it.type === 'email' ? 'icon-email' : 'icon-cal';
+  const icon = it.type==='email' ? '✉' : '📅';
+  const iconClass = it.type==='email' ? 'icon-email' : 'icon-cal';
   const domain = it.account.email.split('@')[1] || it.account.email;
   const unreadDot = it.unread ? '<div class="unread-dot"></div>' : '';
   const unreadTag = it.unread ? `<span class="tag" style="background:rgba(79,142,247,0.1);color:#4f8ef7;">unread</span>` : '';
-  const calTag = it.type === 'cal' ? `<span class="tag" style="background:rgba(62,207,142,0.1);color:#3ecf8e;">event</span>` : '';
+  const calTag = it.type==='cal' ? `<span class="tag" style="background:rgba(62,207,142,0.1);color:#3ecf8e;">event</span>` : '';
   return `<div class="feed-item">
     ${unreadDot}
     <div class="item-icon ${iconClass}">${icon}</div>
     <div class="item-body">
-      <div class="item-row1">
-        <span class="item-from">${esc(it.from)}</span>
-        <span class="item-time">${fmtTime(it.time)}</span>
-      </div>
+      <div class="item-row1"><span class="item-from">${esc(it.from)}</span><span class="item-time">${fmtTime(it.time)}</span></div>
       <div class="item-subject">${esc(it.subject)}</div>
       <div class="item-preview">${esc(it.preview)}</div>
       <div class="item-tags">
@@ -946,8 +387,35 @@ function itemHtml(it) {
   </div>`;
 }
 
-function initials(n) { return (n || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(); }
-function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function fmtTime(d) {
+  if (!d || isNaN(d)) return '';
+  const now = new Date();
+  const yd = new Date(now); yd.setDate(yd.getDate()-1);
+  if (d.toDateString()===now.toDateString()) return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  if (d.toDateString()===yd.toDateString()) return 'Yesterday';
+  return d.toLocaleDateString([],{month:'short',day:'numeric'});
+}
+
+function dayKey(d) {
+  const now = new Date();
+  const yd = new Date(now); yd.setDate(yd.getDate()-1);
+  const tm = new Date(now); tm.setDate(tm.getDate()+1);
+  if (d.toDateString()===now.toDateString()) return 'Today';
+  if (d.toDateString()===yd.toDateString()) return 'Yesterday';
+  if (d.toDateString()===tm.toDateString()) return 'Tomorrow';
+  if (d > now) return d.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'}) + ' (upcoming)';
+  return d.toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'});
+}
+
+function initials(n) { return (n||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setStatus(msg, spin) {
+  const el = document.getElementById('statusbar');
+  el.innerHTML = msg ? ((spin?'<div class="spinner"></div>':'') + `<span>${esc(msg)}</span>`) : '';
+}
+
+// Boot — handle redirect on page load
+handleRedirect();
 </script>
 </body>
 </html>
